@@ -1,0 +1,8 @@
+FROM fuzzers/go-fuzz:1.2.0
+
+ADD . /google-search
+WORKDIR /google-search/fuzz
+RUN export GOPATH=/google-search
+
+RUN go-fuzz-build -libfuzzer -o go-fuzz.a && \
+    clang -fsanitize=fuzzer go-fuzz.a -o go-fuzz.libfuzzer
