@@ -1,15 +1,16 @@
 package fuzz
+import "golang.org/x/time/rate"
 import "github.com/rocketlaunchr/google-search"
 
 func mayhemit(bytes []byte) int {
     content := string(bytes)
 
-	var RateLimit = rate.NewLimiter(5, 0)
+	googlesearch.RateLimit = rate.NewLimiter(5, 0)
 	opts := googlesearch.SearchOptions{
 		Limit: 20,
 	}
 
-	returnLinks, err := googlesearch.Search(nil, content, opts)
+	googlesearch.Search(nil, content, opts)
 	return 0
 }
 
